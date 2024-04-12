@@ -2,6 +2,7 @@ package com.revature.Controllers;
 
 import com.revature.Models.Furniture;
 import com.revature.Services.FurnitureServices;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 public class FurnitureController {
 
     private FurnitureServices fs;
-
+    @Autowired
     public FurnitureController(FurnitureServices fs){
         this.fs = fs;
     }
