@@ -24,7 +24,6 @@ public class Furniture {
     /*
     Material type examples: Metal, Wood, Plastic
      */
-    @Column(nullable = false)
     private String furnitureMaterial;
 
     // no-arg constructor

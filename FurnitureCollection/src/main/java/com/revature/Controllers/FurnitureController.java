@@ -2,10 +2,14 @@ package com.revature.Controllers;
 
 import com.revature.Models.Furniture;
 import com.revature.Services.FurnitureServices;
+import jakarta.persistence.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/furniture")
@@ -20,31 +24,36 @@ public class FurnitureController {
 
     // As a user, I can create a new Furniture
     @PostMapping
-    public Furniture createFurnitureHandler(@RequestBody Furniture furniture){
+    public ResponseEntity<Furniture> createFurnitureHandler(@RequestBody Furniture furniture){
         return fs.createFurniture(furniture);
     }
 
     //As a user, I can view all Furniture
     @GetMapping
-    public List<Furniture> getAllFurnitureHandler(){
+    public ResponseEntity<List<Furniture>> getAllFurnitureHandler(){
         return fs.getAllFurniture();
     }
 
     //As a user, I can view a singular Furniture by its ID
     @GetMapping("{id}")
-    public Furniture getFurnitureByIdHandler(@PathVariable int id){
+    public ResponseEntity<Furniture> getFurnitureByIdHandler(@PathVariable int id){
         return fs.findFurnitureById(id);
     }
 
     //As a user, I can update a Furniture
     @PatchMapping("{id}")
-    public Furniture updateFurnitureHandler( @PathVariable int id, @RequestBody Furniture furniture){
-        return fs.updateFurnitureById(id, furniture.getFurnitureType(), furniture.getFurnitureMaterial());
+    public ResponseEntity<Furniture>updateFurnitureHandler( @PathVariable int id, @RequestBody Furniture furniture){
+        try{
+            return fs.updateFurnitureById(id, furniture.getFurnitureType(), furniture.getFurnitureMaterial());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(BAD_REQUEST).body(null);
+        }
     }
 
     // As a user, I can delete a Furniture by its ID
     @DeleteMapping("{id}")
-    public Furniture deleteFurnitutreByIdHandler(@PathVariable int id){
+    public ResponseEntity<Furniture> deleteFurnitutreByIdHandler(@PathVariable int id){
         return fs.deleteFurnitureById(id);
     }
 }
