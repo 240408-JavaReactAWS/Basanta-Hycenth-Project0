@@ -26,21 +26,28 @@ public class Furniture {
      */
     private String furnitureMaterial;
 
+    /*
+    Quantity available
+     */
+    private int quantityAvailable;
+
     // no-arg constructor
     public Furniture() {
     }
 
     // all-arg constructor
-    public Furniture(int furnitureId, String furnitureType, String furnitureMaterial) {
+    public Furniture(int furnitureId, String furnitureType, String furnitureMaterial, int quantityAvailable) {
         this.furnitureId = furnitureId;
         this.furnitureType = furnitureType;
         this.furnitureMaterial = furnitureMaterial;
+        this.quantityAvailable = quantityAvailable;
     }
 
     // args without furniture id
-    public Furniture(String furnitureType, String furnitureMaterial) {
+    public Furniture(String furnitureType, String furnitureMaterial, int quantityAvailable) {
         this.furnitureType = furnitureType;
         this.furnitureMaterial = furnitureMaterial;
+        this.quantityAvailable = quantityAvailable;
     }
 
     public int getFurnitureId() {
@@ -67,12 +74,21 @@ public class Furniture {
         this.furnitureMaterial = furnitureMaterial;
     }
 
+    public int getQuantityAvailable() {
+        return quantityAvailable;
+    }
+
+    public void setQuantityAvailable(int quantityAvailable) {
+        this.quantityAvailable = quantityAvailable;
+    }
+
     @Override
     public String toString() {
         return "Furniture{" +
                 "furnitureId=" + furnitureId +
                 ", furnitureType='" + furnitureType + '\'' +
                 ", furnitureMaterial='" + furnitureMaterial + '\'' +
+                ", quantityAvailable=" + quantityAvailable +
                 '}';
     }
 }

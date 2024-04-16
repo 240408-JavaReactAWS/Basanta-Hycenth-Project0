@@ -42,13 +42,14 @@ public class FurnitureServices {
     }
 
     // As a user, I can update a Furniture (Change the name or other properties)
-    public ResponseEntity<Furniture> updateFurnitureById(Integer furnitureId, String newFurniType, String newFurniMaterial) {
+    public ResponseEntity<Furniture> updateFurnitureById(Integer furnitureId, String newFurnitureType, String newFurnitureMaterial, int newQuantityAvailable) {
         Optional<Furniture> furniture = fdao.findById(furnitureId);
         if (furniture.isPresent()) {
             Furniture updatedFurniture = furniture.get();
 
-            updatedFurniture.setFurnitureType(newFurniType);
-            updatedFurniture.setFurnitureMaterial(newFurniMaterial);
+            updatedFurniture.setFurnitureType(newFurnitureType);
+            updatedFurniture.setFurnitureMaterial(newFurnitureMaterial);
+            updatedFurniture.setQuantityAvailable(newQuantityAvailable);
             fdao.save(updatedFurniture);
             return ResponseEntity.status(OK).body(updatedFurniture);
         }

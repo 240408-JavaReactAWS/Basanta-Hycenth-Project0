@@ -44,7 +44,7 @@ public class FurnitureController {
     @PatchMapping("{id}")
     public ResponseEntity<Furniture>updateFurnitureHandler( @PathVariable int id, @RequestBody Furniture furniture){
         try{
-            return fs.updateFurnitureById(id, furniture.getFurnitureType(), furniture.getFurnitureMaterial());
+            return fs.updateFurnitureById(id, furniture.getFurnitureType(), furniture.getFurnitureMaterial(), furniture.getQuantityAvailable());
         }catch (Exception e){
             System.out.println(e.getMessage());
             return ResponseEntity.status(BAD_REQUEST).body(null);
