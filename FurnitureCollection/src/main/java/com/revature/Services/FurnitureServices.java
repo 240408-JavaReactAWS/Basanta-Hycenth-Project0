@@ -15,54 +15,62 @@ import static org.springframework.http.HttpStatus.*;
 public class FurnitureServices {
     private FurnitureDAO fdao;
 
-    @Autowired // This tells spring to wire the UserDAO bean into this class so we can use it
+    @Autowired // Autowired annotation tells Spring to inject FurnitureDAO bean into this class
     public FurnitureServices(FurnitureDAO fdao){
         this.fdao = fdao;
     }
 
-    //As a user, I can create a new Furniture by calling save DAO function
+    // Method to create a new Furniture
     public ResponseEntity<Furniture> createFurniture(Furniture furniture){
-        Furniture furniture1 = fdao.save(furniture);
-        return ResponseEntity.status(OK).body(furniture1);
+        // Save the furniture using FurnitureDAO's save method
+        Furniture savedFurniture = fdao.save(furniture);
+        // Return ResponseEntity with saved furniture and status OK
+        return ResponseEntity.status(OK).body(savedFurniture);
     }
 
-    //As a user, I can view all Furniture by calling findALL DAO function
+    // Method to get all Furniture
     public ResponseEntity<List<Furniture>> getAllFurniture(){
-        List<Furniture> lists=  fdao.findAll();
-        return ResponseEntity.status(OK).body(lists);
+        // Retrieve all furniture using FurnitureDAO's findAll method
+        List<Furniture> furnitureList = fdao.findAll();
+        // Return ResponseEntity with list of furniture and status OK
+        return ResponseEntity.status(OK).body(furnitureList);
     }
 
-    //As a user, I can view a singular Furniture by its ID
+    // Method to find a furniture by its ID
     public ResponseEntity<Furniture> findFurnitureById(int id){
+        // Find furniture by its ID using FurnitureDAO's findById method
         Optional<Furniture> furniture = fdao.findById(id);
-        if(furniture.isEmpty()){
-            return ResponseEntity.status(NOT_FOUND).body(null);
-        }
-        return ResponseEntity.status(OK).body(furniture.get());
+        // If furniture is present, return it with status OK; otherwise, return status NOT_FOUND
+        return furniture.map(value -> ResponseEntity.status(OK).body(value))
+                .orElseGet(() -> ResponseEntity.status(NOT_FOUND).body(null));
     }
 
-    // As a user, I can update a Furniture (Change the name or other properties)
+    // Method to update a furniture by its ID
     public ResponseEntity<Furniture> updateFurnitureById(Integer furnitureId, String newFurnitureType, String newFurnitureMaterial, int newQuantityAvailable) {
+        // Find furniture by its ID using FurnitureDAO's findById method
         Optional<Furniture> furniture = fdao.findById(furnitureId);
+        // If furniture is present, update its properties and save it
         if (furniture.isPresent()) {
             Furniture updatedFurniture = furniture.get();
-
             updatedFurniture.setFurnitureType(newFurnitureType);
             updatedFurniture.setFurnitureMaterial(newFurnitureMaterial);
             updatedFurniture.setQuantityAvailable(newQuantityAvailable);
             fdao.save(updatedFurniture);
+            // Return updated furniture with status OK
             return ResponseEntity.status(OK).body(updatedFurniture);
         }
+        // If furniture is not found, return status NOT_FOUND
         return ResponseEntity.status(NOT_FOUND).body(null);
     }
 
-    //As a user, I can delete a Furniture by its ID (HINT: Use Path Params to select a Item by its ID)
+    // Method to delete a furniture by its ID
     public ResponseEntity<Furniture> deleteFurnitureById(int id){
+        // Find furniture by its ID using FurnitureDAO's findById method
         Optional<Furniture> furniture = fdao.findById(id);
-        if(furniture.isEmpty()){
-            return ResponseEntity.status(NOT_FOUND).body(null);
-        }
-        fdao.deleteById(id);
-        return ResponseEntity.status(OK).body(furniture.get());
+        // If furniture is present, delete it and return it with status OK; otherwise, return status NOT_FOUND
+        return furniture.map(value -> {
+            fdao.deleteById(id);
+            return ResponseEntity.status(OK).body(value);
+        }).orElseGet(() -> ResponseEntity.status(NOT_FOUND).body(null));
     }
 }

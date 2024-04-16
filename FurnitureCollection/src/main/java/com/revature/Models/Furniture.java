@@ -3,39 +3,28 @@ package com.revature.Models;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
-@Entity // Entity makes this database table
-@Table(name = "furniture") // allow us to name the Table in database
-@Component // makes the class as Spring bean
+@Entity // Indicates that this class is an entity mapped to a database table
+@Table(name = "furniture") // Specifies the name of the database table
+@Component // Indicates that this class is a Spring bean
 public class Furniture {
-    /*
-    Unique id for each furniture
-     */
-    @Id // create the primary key in the database
-    @Column(name = "furnitureId") //allow us to provide config detail about the column
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // will auto increment the id in database
+
+    @Id // Indicates the primary key of the entity
+    @Column(name = "furnitureId") // Specifies the column name in the database
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Specifies how the ID is generated (auto-increment)
     private int furnitureId;
 
-    /*
-    furniture Type examples: chair, table, bed
-     */
-    @Column(nullable = false)
-    private String furnitureType;
+    @Column(nullable = false) // Specifies that this column cannot be null in the database
+    private String furnitureType; // Represents the type of furniture
 
-    /*
-    Material type examples: Metal, Wood, Plastic
-     */
-    private String furnitureMaterial;
+    private String furnitureMaterial; // Represents the material of the furniture
 
-    /*
-    Quantity available
-     */
-    private int quantityAvailable;
+    private int quantityAvailable; // Represents the quantity of this furniture available
 
-    // no-arg constructor
+    // No-argument constructor
     public Furniture() {
     }
 
-    // all-arg constructor
+    // Constructor with all arguments
     public Furniture(int furnitureId, String furnitureType, String furnitureMaterial, int quantityAvailable) {
         this.furnitureId = furnitureId;
         this.furnitureType = furnitureType;
@@ -43,13 +32,14 @@ public class Furniture {
         this.quantityAvailable = quantityAvailable;
     }
 
-    // args without furniture id
+    // Constructor without the furniture ID
     public Furniture(String furnitureType, String furnitureMaterial, int quantityAvailable) {
         this.furnitureType = furnitureType;
         this.furnitureMaterial = furnitureMaterial;
         this.quantityAvailable = quantityAvailable;
     }
 
+    // Getter and setter methods
     public int getFurnitureId() {
         return furnitureId;
     }
@@ -82,6 +72,7 @@ public class Furniture {
         this.quantityAvailable = quantityAvailable;
     }
 
+    // toString method for printing the object
     @Override
     public String toString() {
         return "Furniture{" +
