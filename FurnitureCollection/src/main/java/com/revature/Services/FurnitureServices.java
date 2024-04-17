@@ -25,7 +25,7 @@ public class FurnitureServices {
         // Save the furniture using FurnitureDAO's save method
         Furniture savedFurniture = fdao.save(furniture);
         // Return ResponseEntity with saved furniture and status OK
-        return ResponseEntity.status(OK).body(savedFurniture);
+        return ResponseEntity.status(201).body(savedFurniture);
     }
 
     // Method to get all Furniture
